@@ -1,847 +1,628 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navjot Kaushal Portfolio</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts - Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0f172a; /* Dark blue-gray background */
-            color: #e2e8f0; /* Light gray text */
-            overflow-x: hidden; /* Prevent horizontal scroll due to animations */
-        }
-        .gradient-text {
-            background: linear-gradient(45deg, #8b5cf6, #ec4899); /* Purple to Pink Gradient */
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .card {
-            background-color: #1e293b; /* Slightly lighter dark blue-gray for cards */
-            border: 1px solid #334155; /* Subtle border */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
-            border-radius: 0.75rem; /* More rounded corners */
-        }
-        .card:hover {
-            transform: translateY(-8px); /* More pronounced lift */
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Larger shadow on hover */
-            border-color: #8b5cf6; /* Highlight border on hover */
-        }
-        .ai-pattern {
-            background-image: radial-gradient(circle at center, #334155 1px, transparent 1px);
-            background-size: 20px 20px;
-            opacity: 0.1;
-            position: fixed; /* Changed to fixed */
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-        /* Custom scrollbar for a sleek look */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #1e293b;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #475569;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #64748b;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Navjot Kaushal | ML Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --bg: #080c14;
+      --surface: #0e1623;
+      --card: #111927;
+      --border: #1e2d42;
+      --accent: #38bdf8;
+      --accent2: #818cf8;
+      --text: #e2eaf6;
+      --muted: #64748b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+    h1, h2, h3, h4 { font-family: 'Syne', sans-serif; }
 
-        /* Styles for the blurred navigation bar */
-        .navbar-blurred {
-            background-color: rgba(15, 23, 42, 0.8); /* Semi-transparent dark blue-gray */
-            backdrop-filter: blur(8px); /* Apply blur effect */
-            -webkit-backdrop-filter: blur(8px); /* For Safari support */
-        }
+    /* Grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(56,189,248,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56,189,248,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-        /* Particle background for hero section */
-        #particles-js {
-            position: fixed; /* Changed to fixed */
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: -2; /* Below ai-pattern */
-        }
+    /* Glow orbs */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.15;
+    }
+    .orb-1 { width: 500px; height: 500px; background: #38bdf8; top: -150px; left: -100px; }
+    .orb-2 { width: 400px; height: 400px; background: #818cf8; bottom: 10%; right: -100px; }
 
-        /* Scroll reveal animations */
-        .scroll-reveal {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        .scroll-reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .scroll-reveal.delay-1 { transition-delay: 0.1s; }
-        .scroll-reveal.delay-2 { transition-delay: 0.2s; }
-        .scroll-reveal.delay-3 { transition-delay: 0.3s; }
-        .scroll-reveal.delay-4 { transition-delay: 0.4s; }
-        .scroll-reveal.delay-5 { transition-delay: 0.5s; }
-        .scroll-reveal.delay-6 { transition-delay: 0.6s; }
+    /* Nav */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      background: rgba(8,12,20,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 2rem;
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 1.2rem;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a {
+      color: var(--muted); font-size: 0.9rem; text-decoration: none;
+      transition: color 0.2s; font-weight: 500;
+    }
+    .nav-links a:hover { color: var(--accent); }
 
-        /* Cursor for typewriter effect */
-        .cursor {
-            display: inline-block;
-            background-color: #ec4899; /* Pink color for cursor */
-            width: 3px;
-            height: 1.2em; /* Adjust height to match text line-height */
-            vertical-align: middle;
-            animation: blink 0.7s infinite;
-        }
+    /* Sections */
+    section { position: relative; z-index: 1; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
 
-        @keyframes blink {
-            0% { opacity: 1; }
-            50% { opacity: 0; }
-            100% { opacity: 1; }
-        }
+    /* Hero */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding-top: 80px;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(56,189,248,0.08);
+      border: 1px solid rgba(56,189,248,0.2);
+      color: var(--accent); border-radius: 999px;
+      padding: 0.35rem 1rem; font-size: 0.8rem;
+      font-weight: 600; letter-spacing: 0.05em;
+      margin-bottom: 1.5rem;
+    }
+    .hero-badge span { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(1.4)} }
+    .hero-name {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 800; line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+    .hero-name .highlight {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-sub {
+      font-size: 1.15rem; color: var(--muted);
+      max-width: 520px; line-height: 1.7; margin: 1.5rem 0 2.5rem;
+    }
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #080c14; font-weight: 700; font-family: 'Syne', sans-serif;
+      padding: 0.8rem 2rem; border-radius: 8px; text-decoration: none;
+      font-size: 0.95rem; transition: opacity 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-2px); }
+    .btn-outline {
+      border: 1px solid var(--border); color: var(--text);
+      padding: 0.8rem 2rem; border-radius: 8px; text-decoration: none;
+      font-size: 0.95rem; font-family: 'Syne', sans-serif; font-weight: 600;
+      transition: border-color 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+    .btn-outline:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .hero-stats {
+      display: flex; gap: 2.5rem; margin-top: 3rem;
+      padding-top: 2rem; border-top: 1px solid var(--border);
+    }
+    .stat-num {
+      font-family: 'Syne', sans-serif; font-size: 2rem;
+      font-weight: 800; color: var(--accent);
+    }
+    .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 0.2rem; }
 
-        /* Custom Message Box Styles */
-        .message-box-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-        }
-        .message-box-overlay.show {
-            opacity: 1;
-            visibility: visible;
-        }
-        .message-box {
-            background-color: #1e293b;
-            padding: 2rem;
-            border-radius: 0.75rem;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
-            text-align: center;
-            max-width: 400px;
-            width: 90%;
-            transform: translateY(-20px);
-            transition: transform 0.3s ease-in-out;
-        }
-        .message-box-overlay.show .message-box {
-            transform: translateY(0);
-        }
-        .message-box h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: #8b5cf6;
-        }
-        .message-box p {
-            color: #e2e8f0;
-            margin-bottom: 1.5rem;
-        }
-        .message-box button {
-            background-color: #8b5cf6;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 9999px;
-            font-weight: bold;
-            transition: background-color 0.3s ease-in-out;
-        }
-        .message-box button:hover {
-            background-color: #7c3aed;
-        }
-    </style>
+    /* Section titles */
+    .section-tag {
+      display: inline-block;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em;
+      color: var(--accent); text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 800; letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+    .section-sub { color: var(--muted); font-size: 1rem; max-width: 480px; }
+
+    /* Cards */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(56,189,248,0.08);
+    }
+
+    /* Skills grid */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-top: 2.5rem; }
+    .skill-card { padding: 1.5rem; }
+    .skill-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+    .skill-title { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.75rem; }
+    .tag {
+      background: rgba(56,189,248,0.08); border: 1px solid rgba(56,189,248,0.15);
+      color: var(--accent); font-size: 0.72rem; font-weight: 600;
+      padding: 0.2rem 0.6rem; border-radius: 4px;
+    }
+
+    /* Projects grid */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-top: 2.5rem; }
+    .project-card { padding: 1.75rem; position: relative; overflow: hidden; }
+    .project-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .project-card:hover::before { opacity: 1; }
+    .project-num {
+      font-family: 'Syne', sans-serif; font-size: 3rem; font-weight: 800;
+      color: rgba(56,189,248,0.06); position: absolute; top: 1rem; right: 1.5rem;
+      line-height: 1;
+    }
+    .project-title { font-family: 'Syne', sans-serif; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .project-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.65; margin-bottom: 1.25rem; }
+    .project-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.25rem; }
+    .stack-tag {
+      background: rgba(129,140,248,0.08); border: 1px solid rgba(129,140,248,0.15);
+      color: var(--accent2); font-size: 0.7rem; font-weight: 600;
+      padding: 0.2rem 0.6rem; border-radius: 4px;
+    }
+    .project-links { display: flex; gap: 1rem; }
+    .project-link {
+      font-size: 0.8rem; font-weight: 600; text-decoration: none;
+      color: var(--accent); display: flex; align-items: center; gap: 0.3rem;
+      transition: opacity 0.2s;
+    }
+    .project-link:hover { opacity: 0.7; }
+    .project-link.github { color: var(--muted); }
+    .project-link.github:hover { color: var(--text); }
+
+    /* Timeline */
+    .timeline { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 0; }
+    .timeline-item { display: grid; grid-template-columns: 140px 1fr; gap: 2rem; position: relative; padding-bottom: 2.5rem; }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-date { font-family: 'Syne', sans-serif; font-size: 0.8rem; font-weight: 700; color: var(--accent); padding-top: 0.1rem; text-align: right; }
+    .timeline-body { position: relative; padding-left: 1.5rem; border-left: 1px solid var(--border); }
+    .timeline-dot {
+      position: absolute; left: -5px; top: 4px;
+      width: 9px; height: 9px; border-radius: 50%;
+      background: var(--accent); border: 2px solid var(--bg);
+    }
+    .timeline-role { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.2rem; }
+    .timeline-company { font-size: 0.85rem; color: var(--accent2); margin-bottom: 0.75rem; }
+    .timeline-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+    .timeline-bullets li { font-size: 0.88rem; color: var(--muted); padding-left: 1rem; position: relative; line-height: 1.5; }
+    .timeline-bullets li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 0.8rem; }
+
+    /* Certifications */
+    .cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; margin-top: 2.5rem; }
+    .cert-card { padding: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; }
+    .cert-issuer { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+    .cert-name { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; }
+    .cert-date { font-size: 0.8rem; color: var(--muted); }
+    .cert-link {
+      margin-top: 0.75rem; font-size: 0.8rem; color: var(--accent2);
+      text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.3rem;
+      transition: opacity 0.2s;
+    }
+    .cert-link:hover { opacity: 0.7; }
+
+    /* Hackathon badge */
+    .hackathon-badge {
+      margin-top: 1.5rem;
+      background: linear-gradient(135deg, rgba(56,189,248,0.06), rgba(129,140,248,0.06));
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.25rem 1.75rem;
+      display: flex; align-items: center; gap: 1.25rem;
+    }
+    .hackathon-icon { font-size: 2.5rem; }
+    .hackathon-title { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; }
+    .hackathon-sub { font-size: 0.85rem; color: var(--muted); margin-top: 0.2rem; }
+
+    /* Contact */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2.5rem; }
+    .contact-info { display: flex; flex-direction: column; gap: 1.25rem; }
+    .contact-item { display: flex; align-items: center; gap: 0.75rem; font-size: 0.9rem; }
+    .contact-item a { color: var(--text); text-decoration: none; transition: color 0.2s; }
+    .contact-item a:hover { color: var(--accent); }
+    .contact-icon { width: 36px; height: 36px; background: rgba(56,189,248,0.08); border: 1px solid rgba(56,189,248,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    form input, form textarea {
+      width: 100%; background: var(--card); border: 1px solid var(--border);
+      color: var(--text); border-radius: 8px; padding: 0.75rem 1rem;
+      font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+      transition: border-color 0.2s; outline: none; resize: none;
+    }
+    form input:focus, form textarea:focus { border-color: var(--accent); }
+    form label { font-size: 0.8rem; font-weight: 600; color: var(--muted); margin-bottom: 0.4rem; display: block; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-row { display: flex; flex-direction: column; gap: 1rem; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border); padding: 2rem;
+      text-align: center; color: var(--muted); font-size: 0.85rem;
+      position: relative; z-index: 1;
+    }
+
+    /* Scroll reveal */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal.delay-1 { transition-delay: 0.1s; }
+    .reveal.delay-2 { transition-delay: 0.2s; }
+    .reveal.delay-3 { transition-delay: 0.3s; }
+
+    @media (max-width: 700px) {
+      .contact-grid { grid-template-columns: 1fr; }
+      .timeline-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      .timeline-date { text-align: left; }
+      .nav-links { display: none; }
+      .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+    }
+  </style>
 </head>
-<body class="antialiased">
-    <!-- Particle background canvas (moved here) -->
-    <div id="particles-js"></div>
-    <!-- AI pattern (moved here) -->
-    <div class="ai-pattern"></div>
+<body>
 
-    <!-- Custom Message Box HTML -->
-    <div id="customMessageBox" class="message-box-overlay">
-        <div class="message-box">
-            <h3 id="messageBoxTitle"></h3>
-            <p id="messageBoxContent"></p>
-            <button id="messageBoxCloseBtn">OK</button>
-        </div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <span class="nav-logo">NK.</span>
+      <div class="nav-links">
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#certifications">Certifications</a>
+        <a href="#contact">Contact</a>
+      </div>
     </div>
+  </nav>
 
-    <!-- Navigation Bar -->
-    <nav id="navbar" class="bg-gray-900 p-4 shadow-lg fixed w-full z-10 top-0 transition-all duration-300 ease-in-out">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold gradient-text rounded-lg p-2"></a>
-            <div class="space-x-4">
-                <a href="#about" class="text-gray-300 hover:text-white transition duration-300 rounded-md px-3 py-2">About</a>
-                <a href="#skills" class="text-gray-300 hover:text-white transition duration-300 rounded-md px-3 py-2">Skills</a>
-                <a href="#projects" class="text-gray-300 hover:text-white transition duration-300 rounded-md px-3 py-2">Projects</a>
-                <a href="#experience" class="text-gray-300 hover:text-white transition duration-300 rounded-md px-3 py-2">Experience</a>
-                <a href="#certifications" class="text-gray-300 hover:text-white transition duration-300 rounded-md px-3 py-2">Certifications</a>
-                <a href="#contact" class="text-gray-300 hover:text-white transition duration-300 rounded-md px-3 py-2">Contact</a>
-            </div>
+  <!-- HERO -->
+  <section id="hero">
+    <div class="container">
+      <div class="reveal">
+        <div class="hero-badge"><span></span> Open to ML Internships & Opportunities</div>
+        <h1 class="hero-name">
+          Navjot<br><span class="highlight">Kaushal</span>
+        </h1>
+        <p class="hero-sub">
+          B.Tech CS student building intelligent systems — from heart disease prediction models to deployed Streamlit apps. Passionate about turning data into real-world impact.
+        </p>
+        <div class="hero-ctas">
+          <a href="#projects" class="btn-primary">View Projects</a>
+          <a href="https://github.com/Navjotkaushal" target="_blank" class="btn-outline">GitHub →</a>
+          <a href="https://linkedin.com/in/navjotkaushal" target="_blank" class="btn-outline">LinkedIn →</a>
         </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="about" class="relative min-h-screen flex items-center justify-center text-center pt-20 overflow-hidden">
-        <div class="container mx-auto px-4 py-16 max-w-4xl z-0">
-            <div class="relative w-48 h-48 mx-auto mb-8 rounded-full overflow-hidden border-4 border-purple-600 shadow-lg scroll-reveal">
-                <!-- Placeholder image for profile picture -->
-                <img src="Nav.jpg" alt="Profile Picture" class="w-full h-full object-cover">
-            </div>
-            <h1 class="text-5xl md:text-7xl font-extrabold mb-4 leading-tight scroll-reveal delay-1">
-                Hello, I'm <span class="gradient-text">Navjot Kaushal</span>
-            </h1>
-            <p class="text-xl md:text-2xl text-gray-400 mb-8 max-w-2xl mx-auto scroll-reveal delay-2">
-                A passionate <span class="text-cyan-400">ML Engineer</span> dedicated to building intelligent systems and unraveling the complexities of data.
-            </p>
-            <div class="flex justify-center space-x-4 scroll-reveal delay-3">
-                <a href="#projects" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105">
-                    View My Projects
-                </a>
-                <a href="#contact" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105">
-                    Get In Touch
-                </a>
-            </div>
+        <div class="hero-stats">
+          <div>
+            <div class="stat-num">3+</div>
+            <div class="stat-label">Deployed Projects</div>
+          </div>
+          <div>
+            <div class="stat-num">92%</div>
+            <div class="stat-label">Best Model Accuracy</div>
+          </div>
+          <div>
+            <div class="stat-num">2</div>
+            <div class="stat-label">Certifications</div>
+          </div>
+          <div>
+            <div class="stat-num">SIH</div>
+            <div class="stat-label">Hackathon Participant</div>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- Skills Section -->
-    <section id="skills" class="py-20">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold text-center mb-12 gradient-text scroll-reveal">My Expertise</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Skill Card 1 -->
-                <div class="card p-6 rounded-lg text-center scroll-reveal delay-1">
-                    <div class="text-5xl mb-4 text-blue-400">🧠</div>
-                    <h3 class="text-2xl font-semibold mb-2">Machine Learning</h3>
-                    <p class="text-gray-400">Deep understanding of ML algorithms, model training, evaluation, and deployment.</p>
-                    <ul class="mt-4 text-gray-500 text-sm list-disc list-inside">
-                        <li>Supervised & Unsupervised Learning</li>
-                        <li>Feature Engineering</li>
-                    </ul>
-                </div>
-                <!-- Skill Card 2 -->
-                <div class="card p-6 rounded-lg text-center scroll-reveal delay-2">
-                    <div class="text-5xl mb-4 text-green-400">💻</div>
-                    <h3 class="text-2xl font-semibold mb-2">Deep Learning & Frameworks</h3>
-                    <p class="text-gray-400">Proficient in modern deep learning architectures and popular frameworks.</p>
-                    <ul class="mt-4 text-gray-500 text-sm list-disc list-inside">
-                        <li>TensorFlow, PyTorch</li>
-                        <li>Natural Language Processing</li>
-                        <li>Keras</li>
-                    </ul>
-                </div>
-               
-                <!-- Skill Card 5 -->
-                <div class="card p-6 rounded-lg text-center scroll-reveal delay-5">
-                    <div class="text-5xl mb-4 text-purple-400">📊</div>
-                    <h3 class="text-2xl font-semibold mb-2">Data Science & Analytics</h3>
-                    <p class="text-gray-400">Strong foundation in data manipulation, visualization, and statistical analysis.</p>
-                    <ul class="mt-4 text-gray-500 text-sm list-disc list-inside">
-                        <li>Pandas, NumPy, Matplotlib, Seaborn</li>
-                        <li>SQL, NoSQL Databases</li>
-                    </ul>
-                </div>
-                <!-- Skill Card 6 
-                <div class="card p-6 rounded-lg text-center scroll-reveal delay-6">
-                    <div class="text-5xl mb-4 text-teal-400">☁️</div>
-                    <h3 class="text-2xl font-semibold mb-2">Cloud & MLOps</h3>
-                    <p class="text-gray-400">Experience with cloud platforms and MLOps practices for scalable solutions.</p>
-                    <ul class="mt-4 text-gray-500 text-sm list-disc list-inside">
-                        <li>AWS, Google Cloud Platform (GCP)</li>
-                        <li>Docker, Kubernetes</li>
-                        <li>CI/CD for ML</li>
-                    </ul>
-                </div>-->
-            </div>
+  <!-- SKILLS -->
+  <section id="skills" style="padding: 6rem 0;">
+    <div class="container">
+      <div class="reveal">
+        <div class="section-tag">Expertise</div>
+        <h2 class="section-title">Technical Skills</h2>
+        <p class="section-sub">Core competencies across the ML pipeline — from data to deployment.</p>
+      </div>
+      <div class="skills-grid">
+        <div class="card skill-card reveal delay-1">
+          <div class="skill-icon">🧠</div>
+          <div class="skill-title">Machine Learning</div>
+          <p style="color:var(--muted);font-size:0.85rem;">Supervised & unsupervised learning, feature engineering, hyperparameter tuning, pipelines.</p>
+          <div class="skill-tags">
+            <span class="tag">Scikit-learn</span><span class="tag">XGBoost</span><span class="tag">Pipelines</span>
+          </div>
         </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="py-20">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold text-center mb-12 gradient-text scroll-reveal">My Projects</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- NEW Project Card: Car Price Prediction Model -->
-                <div class="card p-6 rounded-lg scroll-reveal delay-1">
-                    <img src="stock.jpg" alt="Stock Price Prediction Project" class="rounded-md mb-4 w-full h-48 object-cover">
-                    <h3 class="text-2xl font-semibold mb-2 text-white">Stock Price Prediction Model</h3>
-                    <p class="text-gray-400 mb-4">Developed a machine learning model to predict stock prices based on features like historical prices, trading volume, and market sentiment.</p>
-                    <div class="flex justify-between items-center">
-                        <!-- Replace with your actual demo URL -->
-                        <a href="https://example.com/car-prediction-demo" target="_blank" class="text-purple-400 hover:text-purple-500 font-medium transition duration-300">
-                            View Demo &rarr;
-                        </a>
-                        <!-- Replace with your actual GitHub repository URL -->
-                        <a href="https://github.com/Navjotkaushal/Stock-Price-Predictor" target="_blank" class="text-gray-500 hover:text-white transition duration-300">
-                            GitHub
-                        </a>
-                    </div>
-                </div>
-                <!-- Project Card 1 (now second) -->
-                <div class="card p-6 rounded-lg scroll-reveal delay-2">
-                    <img src="loan.jpg" alt="" class="rounded-md mb-4 w-full h-48 object-cover">
-                    <h3 class="text-2xl font-semibold mb-2 text-white">Smart Loan Recovery Model</h3>
-                    <p class="text-gray-400 mb-4">Developed a model to predict the likelihood of loan recovery based on borrower characteristics and economic indicators and risk factors.</p>
-                    <div class="flex justify-between items-center">
-                        <!-- Replace with your actual demo URL -->
-                        <a href="https://example.com/sentiment-demo" target="_blank" class="text-purple-400 hover:text-purple-500 font-medium transition duration-300">
-                            View Demo &rarr;
-                        </a>
-                        <!-- Replace with your actual GitHub repository URL -->
-                        <a href="https://github.com/your-username/sentiment-analysis-repo" target="_blank" class="text-gray-500 hover:text-white transition duration-300">
-                            GitHub
-                        </a>
-                    </div>
-                </div>
-                <!-- Project Card 2 (now third) -->
-                <div class="card p-6 rounded-lg text-center scroll-reveal delay-3">
-                    <img src="sentiment.jpg" alt="Loan Approval Prediction" class="rounded-md mb-4 w-full h-48 object-cover">
-                    <h3 class="text-2xl font-semibold mb-2 text-white">Text Emotion Classification Model</h3>
-                    <p class="text-gray-400 mb-4">Built a model to classify emotions in text based on user input.</p>
-                    <div class="flex justify-between items-center">
-                        <!-- Replace with your actual demo URL -->
-                        <a href="https://example.com/object-detection-demo" target="_blank" class="text-purple-400 hover:text-purple-500 font-medium transition duration-300">
-                            View Demo &rarr;
-                        </a>
-                        <!-- Replace with your actual GitHub repository URL -->
-                        <a href="https://github.com/your-username/object-detection-repo" target="_blank" class="text-gray-500 hover:text-white transition duration-300">
-                            GitHub
-                        </a>
-                    </div>
-                </div>
-                
-                </div>
-            </div>
+        <div class="card skill-card reveal delay-2">
+          <div class="skill-icon">🔬</div>
+          <div class="skill-title">Deep Learning</div>
+          <p style="color:var(--muted);font-size:0.85rem;">Neural network architectures, model training and evaluation using modern DL frameworks.</p>
+          <div class="skill-tags">
+            <span class="tag">TensorFlow</span><span class="tag">PyTorch</span><span class="tag">Keras</span>
+          </div>
         </div>
-    </section>
-
-    <!-- Experience & Education Section -->
-    <section id="experience" class="py-20">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold text-center mb-12 gradient-text scroll-reveal">Experience & Education</h2>
-            <div class="max-w-3xl mx-auto space-y-12">
-                <!-- Experience 1 -->
-                <div class="relative pl-8 border-l-2 border-purple-600 scroll-reveal delay-1">
-                    <div class="absolute w-4 h-4 bg-purple-600 rounded-full -left-2 top-0"></div>
-                    <h3 class="text-2xl font-semibold text-white mb-1">B.Tech. in Computer Science</h3>
-                    <p class="text-lg text-gray-300 mb-2">Sant Baba Bhag Singh University | 2023 - 2027</p>
-                    <ul class="list-disc list-inside text-gray-400 space-y-1">
-                        <li>Undergraduate.</li>
-                        <li>Focused on Data Structures, Algorithms, and Database Management Systems.</li>
-                    </ul>
-                </div>
-                <!-- Experience 2 -->
-                <div class="relative pl-8 border-l-2 border-purple-600 scroll-reveal delay-2">
-                    <div class="absolute w-4 h-4 bg-purple-600 rounded-full -left-2 top-0"></div>
-                    <h3 class="text-2xl font-semibold text-white mb-1">Python ML Intern</h3>
-                    <p class="text-lg text-gray-300 mb-2">Future Finders | 2025</p>
-                    <ul class="list-disc list-inside text-gray-400 space-y-1">
-                        <li>Implemented and evaluated various supervised & unsupervised learning algorithms.</li>
-                        <li>Improved the skills like feature engineering, data preprocessing, and making end-to-end projects.</li>
-                    </ul>
-                </div>
-                
-            </div>
+        <div class="card skill-card reveal delay-3">
+          <div class="skill-icon">📊</div>
+          <div class="skill-title">Data Science</div>
+          <p style="color:var(--muted);font-size:0.85rem;">Data wrangling, visualization, statistical analysis, and SQL-based data pipelines.</p>
+          <div class="skill-tags">
+            <span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Seaborn</span><span class="tag">SQL</span>
+          </div>
         </div>
-    </section>
-
-    <!-- Certifications Section -->
-    <section id="certifications" class="py-20">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold text-center mb-12 gradient-text scroll-reveal">Certifications</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Certification Card 1 -->
-                <div class="card p-6 rounded-lg text-center scroll-reveal delay-1">
-                    <div class="text-5xl mb-4 text-orange-400">🏅</div>
-                    <h3 class="text-2xl font-semibold mb-2">Machine Learning</h3>
-                    <p class="text-gray-400 mb-2">Issued by Future Finders</p>
-                    <p class="text-gray-500 text-sm mb-4">Issued: August 2025</p>
-                    <a href="navjot kaushal cer...pdf" target="_blank" class="text-purple-400 hover:text-purple-500 font-medium transition duration-300">
-                        View Credential &rarr;
-                    </a>
-                </div>
-                <!-- Certification Card 2 -->
-                <div class="card p-6 rounded-lg text-center scroll-reveal delay-2">
-                    <div class="text-5xl mb-4 text-blue-400">🏆</div>
-                    <h3 class="text-2xl font-semibold mb-2">Intermediate Machine Learning</h3>
-                    <p class="text-gray-400 mb-2">Issued by Kaggle</p>
-                    <p class="text-gray-500 text-sm mb-4">Issued: November 2022</p>
-                    <a href="https://www.kaggle.com/learn/certification/navjotkaushal/intermediate-machine-learning" target="_blank" class="text-purple-400 hover:text-purple-500 font-medium transition duration-300">
-                        View Credential &rarr;
-                    </a>
-                </div>
-                <!-- Certification Card 3
-                <div class="card p-6 rounded-lg text-center scroll-reveal delay-3">
-                    <div class="text-5xl mb-4 text-green-400">📜</div>
-                    <h3 class="text-2xl font-semibold mb-2">TensorFlow Developer Certificate</h3>
-                    <p class="text-gray-400 mb-2">Issued by Google</p>
-                    <p class="text-gray-500 text-sm mb-4">Issued: April 2022</p>
-                    <a href="https://www.tensorflow.org/certificate/your-tf-cert-id" target="_blank" class="text-purple-400 hover:text-purple-500 font-medium transition duration-300">
-                        View Credential &rarr;
-                    </a>
-                </div> -->
-                
-            </div>
+        <div class="card skill-card reveal delay-1">
+          <div class="skill-icon">🚀</div>
+          <div class="skill-title">Deployment & Tools</div>
+          <p style="color:var(--muted);font-size:0.85rem;">End-to-end ML deployment, model serialization, containerization, and version control.</p>
+          <div class="skill-tags">
+            <span class="tag">Streamlit</span><span class="tag">Docker</span><span class="tag">Git</span><span class="tag">GitHub</span>
+          </div>
         </div>
-    </section>
-
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-20">
-        <div class="container mx-auto px-4 max-w-2xl">
-            <h2 class="text-4xl font-bold text-center mb-12 gradient-text scroll-reveal">Get In Touch</h2>
-            <p class="text-center text-gray-400 mb-8 scroll-reveal delay-1">
-                Have a project in mind or just want to chat about AI/ML? Feel free to reach out!
-            </p>
-            <!--
-                IMPORTANT: This form now uses JavaScript to send data to Firestore.
-                No 'action' attribute is needed here for direct submission.
-            -->
-            <form id="contactForm" class="space-y-6 card p-8 rounded-lg scroll-reveal delay-2">
-                <div>
-                    <label for="name" class="block text-gray-300 text-sm font-bold mb-2">Name</label>
-                    <!-- Changed text color to white for visibility -->
-                    <input type="text" id="name" name="name" class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-white leading-tight focus:outline-none focus:ring-2 focus:ring-purple-600 bg-gray-700 border-gray-600" placeholder="Your Name" required>
-                </div>
-                <div>
-                    <label for="email" class="block text-gray-300 text-sm font-bold mb-2">Email</label>
-                    <!-- Changed text color to white for visibility -->
-                    <input type="email" id="email" name="email" class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-white leading-tight focus:outline-none focus:ring-2 focus:ring-purple-600 bg-gray-700 border-gray-600" placeholder="your.email@example.com" required>
-                </div>
-                <div>
-                    <label for="message" class="block text-gray-300 text-sm font-bold mb-2">Message</label>
-                    <!-- Changed text color to white for visibility -->
-                    <textarea id="message" name="message" rows="6" class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-white leading-tight focus:outline-none focus:ring-2 focus:ring-purple-600 bg-gray-700 border-gray-600" placeholder="Your message..." required></textarea>
-                </div>
-                <div class="text-center">
-                    <button type="submit" id="submitBtn" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105">
-                        Send Message
-                    </button>
-                    <span id="loadingIndicator" class="hidden text-gray-400 ml-4">Sending...</span>
-                </div>
-            </form>
-            <div class="mt-8 text-center text-gray-500 scroll-reveal delay-3">
-                <p>You can also find me on:</p>
-                <div class="flex justify-center space-x-6 mt-4">
-                    <!-- Placeholder for social media icons/links -->
-                    <a href="https://www.linkedin.com/in/navjot-kaushal-258837317" target="_blank" class="text-gray-400 hover:text-white transition duration-300 text-3xl">
-                        <!-- LinkedIn Icon (example) -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="inline-block"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                    </a>
-                    <a href="https://github.com/Navjotkaushal " target="_blank" class="text-gray-400 hover:text-white transition duration-300 text-3xl">
-                        <!-- GitHub Icon (example) -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="inline-block"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.835 2.809 1.305 3.493.998.108-.776.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.197-6.091 8.197-11.387c0-6.627-5.373-12-12-12z"/></svg>
-                    </a>
-                </div>
-            </div>
+        <div class="card skill-card reveal delay-2">
+          <div class="skill-icon">💻</div>
+          <div class="skill-title">Programming</div>
+          <p style="color:var(--muted);font-size:0.85rem;">Strong foundations in Python, C++, SQL, and web technologies for full-stack ML apps.</p>
+          <div class="skill-tags">
+            <span class="tag">Python</span><span class="tag">C++</span><span class="tag">HTML/CSS</span><span class="tag">JS</span>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- Admin Messages Section (Initially Hidden) -->
-    <section id="admin-messages" class="py-20 hidden">
-        <div class="container mx-auto px-4 max-w-4xl">
-            <h2 class="text-4xl font-bold text-center mb-12 gradient-text">Received Messages (Admin View)</h2>
-            <div id="messagesList" class="space-y-6">
-                <!-- Messages will be loaded here by JavaScript -->
-                <p class="text-center text-gray-400">Loading messages...</p>
-            </div>
-            <div class="text-center mt-8">
-                <button id="hideMessagesBtn" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105">
-                    Hide Messages
-                </button>
-            </div>
+  <!-- PROJECTS -->
+  <section id="projects" style="padding: 6rem 0;">
+    <div class="container">
+      <div class="reveal">
+        <div class="section-tag">Work</div>
+        <h2 class="section-title">Projects</h2>
+        <p class="section-sub">Real-world ML solutions — built, deployed, and production-ready.</p>
+      </div>
+      <div class="projects-grid">
+
+        <!-- Project 1: Stock Price Predictor -->
+        <div class="card project-card reveal delay-1">
+          <div class="project-num">01</div>
+          <div class="project-title">Stock Price Predictor</div>
+          <p class="project-desc">ML model to predict stock prices using historical data and APIs. Achieved 92% accuracy with feature engineering and model optimization. Tracks prediction history via a SQL database.</p>
+          <div class="project-stack">
+            <span class="stack-tag">Python</span>
+            <span class="stack-tag">Scikit-learn</span>
+            <span class="stack-tag">Streamlit</span>
+            <span class="stack-tag">SQL</span>
+            <span class="stack-tag">Seaborn</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/Navjotkaushal/Stock-Price-Predictor" target="_blank" class="project-link github">⌥ GitHub →</a>
+          </div>
         </div>
-    </section>
 
-    <!-- Footer -->
-    <footer class="bg-gray-950 text-gray-500 py-6 text-center text-sm">
-        <div class="container mx-auto px-4">
-            <p>&copy; 2025 Navjot Kaushal. All rights reserved.</p>
-            <p>Designed with <span class="text-red-500">&hearts;</span> and powered by AI.</p>
-            <p id="currentUserId" class="mt-2 text-xs text-gray-600"></p>
-            <button id="toggleAdminMessages" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white text-sm py-2 px-4 rounded-full transition duration-300">
-                Toggle Admin Messages
-            </button>
+        <!-- Project 2: Resume Screener -->
+        <div class="card project-card reveal delay-2">
+          <div class="project-num">02</div>
+          <div class="project-title">Resume Screener & Predictor</div>
+          <p class="project-desc">ML-powered resume classification tool with automated candidate scoring. Features model serialization, deployed on Streamlit Cloud with deep data visualizations.</p>
+          <div class="project-stack">
+            <span class="stack-tag">Python</span>
+            <span class="stack-tag">Scikit-learn</span>
+            <span class="stack-tag">Streamlit</span>
+            <span class="stack-tag">Matplotlib</span>
+            <span class="stack-tag">Seaborn</span>
+          </div>
+          <div class="project-links">
+            <a href="https://navjotkaushal-resume-screener-and-predictorr-app-vxosmt.streamlit.app/" target="_blank" class="project-link">⚡ Live Demo →</a>
+          </div>
         </div>
-    </footer>
 
-    <!-- Firebase SDKs -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        <!-- Project 3: Python Tutor -->
+        <div class="card project-card reveal delay-3">
+          <div class="project-num">03</div>
+          <div class="project-title">Python Tutor — Interactive Learning</div>
+          <p class="project-desc">Responsive web platform for interactive Python learning with dynamic code examples and real-time explanations. Built for beginner-to-intermediate learners.</p>
+          <div class="project-stack">
+            <span class="stack-tag">HTML</span>
+            <span class="stack-tag">CSS</span>
+            <span class="stack-tag">JavaScript</span>
+            <span class="stack-tag">Python</span>
+          </div>
+          <div class="project-links">
+            <a href="https://navjotkaushal.github.io/Python-Tutor/" target="_blank" class="project-link">⚡ Live Demo →</a>
+          </div>
+        </div>
 
-        // Global variables provided by the Canvas environment
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+      </div>
+    </div>
+  </section>
 
-        let app;
-        let db;
-        let auth;
-        let currentUserId = 'anonymous'; // Default until authenticated
+  <!-- EXPERIENCE -->
+  <section id="experience" style="padding: 6rem 0;">
+    <div class="container">
+      <div class="reveal">
+        <div class="section-tag">Background</div>
+        <h2 class="section-title">Experience & Education</h2>
+      </div>
+      <div class="timeline reveal delay-1">
 
-        // Custom Message Box Function
-        function showMessageBox(title, content) {
-            const messageBox = document.getElementById('customMessageBox');
-            document.getElementById('messageBoxTitle').textContent = title;
-            document.getElementById('messageBoxContent').textContent = content;
-            messageBox.classList.add('show');
-        }
+        <div class="timeline-item">
+          <div class="timeline-date">Jun–Jul 2025</div>
+          <div class="timeline-body">
+            <div class="timeline-dot"></div>
+            <div class="timeline-role">Python ML Intern</div>
+            <div class="timeline-company">Future Finders · Mohali, Chandigarh</div>
+            <ul class="timeline-bullets">
+              <li>Developed a Heart Disease Prediction Model achieving 86% accuracy.</li>
+              <li>Optimized model using Hyperparameter Tuning and Scikit-learn Pipelines.</li>
+              <li>Built data visualization dashboards using Seaborn and Matplotlib.</li>
+            </ul>
+          </div>
+        </div>
 
-        document.getElementById('messageBoxCloseBtn').addEventListener('click', () => {
-            document.getElementById('customMessageBox').classList.remove('show');
-        });
+        <div class="timeline-item">
+          <div class="timeline-date">2023 – 2027</div>
+          <div class="timeline-body">
+            <div class="timeline-dot"></div>
+            <div class="timeline-role">B.Tech — Computer Science</div>
+            <div class="timeline-company">SBBSU · Jalandhar, India</div>
+            <ul class="timeline-bullets">
+              <li>Focused on Data Structures, Algorithms, and ML fundamentals.</li>
+              <li>Participated in Smart India Hackathon 2025 at university level.</li>
+            </ul>
+          </div>
+        </div>
 
-        // Initialize Firebase and Authenticate
-        async function initializeFirebase() {
-            try {
-                app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
+      </div>
+    </div>
+  </section>
 
-                // Sign in with custom token if available, otherwise anonymously
-                if (initialAuthToken) {
-                    await signInWithCustomToken(auth, initialAuthToken);
-                } else {
-                    await signInAnonymously(auth);
-                }
+  <!-- CERTIFICATIONS -->
+  <section id="certifications" style="padding: 6rem 0;">
+    <div class="container">
+      <div class="reveal">
+        <div class="section-tag">Credentials</div>
+        <h2 class="section-title">Certifications & Achievements</h2>
+      </div>
+      <div class="cert-grid">
 
-                // Listen for auth state changes to get the user ID
-                onAuthStateChanged(auth, (user) => {
-                    if (user) {
-                        currentUserId = user.uid;
-                        document.getElementById('currentUserId').textContent = `Your User ID: ${currentUserId}`;
-                        console.log("Firebase authenticated. User ID:", currentUserId);
-                        // Start listening to messages only after authentication is ready
-                        setupMessageListener();
-                    } else {
-                        currentUserId = crypto.randomUUID(); // Fallback for unauthenticated state
-                        document.getElementById('currentUserId').textContent = `Your (Anonymous) User ID: ${currentUserId}`;
-                        console.log("Firebase not authenticated, using anonymous ID:", currentUserId);
-                        // Still try to setup message listener, but it might fail if rules require auth
-                        setupMessageListener();
-                    }
-                });
+        <div class="card cert-card reveal delay-1">
+          <div style="font-size:2rem;">🏅</div>
+          <div class="cert-issuer">Future Finders · Mohali, Chandigarh</div>
+          <div class="cert-name">Artificial Intelligence & Machine Learning</div>
+          <div class="cert-date">Issued: August 2025</div>
+          <a href="navjot kaushal cer...pdf" target="_blank" class="cert-link">View Certificate ↗</a>
+        </div>
 
-            } catch (error) {
-                console.error("Error initializing Firebase or authenticating:", error);
-                showMessageBox("Error", "Failed to initialize Firebase. Some features may not work.");
-            }
-        }
+        <div class="card cert-card reveal delay-2">
+          <div style="font-size:2rem;">🏆</div>
+          <div class="cert-issuer">Kaggle</div>
+          <div class="cert-name">Intermediate Machine Learning</div>
+          <div class="cert-date">Issued: November 2022</div>
+          <a href="https://www.kaggle.com/learn/certification/navjotkaushal/intermediate-machine-learning" target="_blank" class="cert-link">View Certificate ↗</a>
+        </div>
 
-        // Contact Form Submission
-        const contactForm = document.getElementById('contactForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const loadingIndicator = document.getElementById('loadingIndicator');
+        <div class="card cert-card reveal delay-3">
+          <div style="font-size:2rem;">🏆</div>
+          <div class="cert-issuer">Kaggle</div>
+          <div class="cert-name">Python</div>
+          <div class="cert-date">Issued: 2022</div>
+          <a href="https://www.kaggle.com/learn/certification/navjotkaushal/python" target="_blank" class="cert-link">View Certificate ↗</a>
+        </div>
 
-        contactForm.addEventListener('submit', async (e) => {
-            e.preventDefault(); // Prevent default form submission
+      </div>
 
-            submitBtn.disabled = true;
-            loadingIndicator.classList.remove('hidden');
+      <!-- Hackathon -->
+      <div class="hackathon-badge reveal delay-2" style="margin-top:1.5rem;">
+        <div class="hackathon-icon">🏁</div>
+        <div>
+          <div class="hackathon-title">Smart India Hackathon 2025</div>
+          <div class="hackathon-sub">Participated at university level · India's largest national hackathon · Collaborated on tech solutions under time constraints</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
+  <!-- CONTACT -->
+  <section id="contact" style="padding: 6rem 0;">
+    <div class="container">
+      <div class="reveal">
+        <div class="section-tag">Get in Touch</div>
+        <h2 class="section-title">Let's Connect</h2>
+        <p class="section-sub">Open to ML internships, collaborations, and interesting projects.</p>
+      </div>
+      <div class="contact-grid reveal delay-1">
+        <div class="contact-info">
+          <div class="contact-item">
+            <div class="contact-icon">✉️</div>
+            <a href="mailto:navjotkaushal3699@gmail.com">navjotkaushal3699@gmail.com</a>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📱</div>
+            <span>+91 7876188432</span>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">💼</div>
+            <a href="https://linkedin.com/in/navjotkaushal" target="_blank">linkedin.com/in/navjotkaushal</a>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">🐙</div>
+            <a href="https://github.com/Navjotkaushal" target="_blank">github.com/Navjotkaushal</a>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">🌐</div>
+            <a href="https://navjotkaushal.github.io/Portfolio/" target="_blank">navjotkaushal.github.io/Portfolio</a>
+          </div>
+        </div>
+        <form id="contactForm" class="form-row" onsubmit="handleSubmit(event)">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" id="name" placeholder="Your name" required />
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="email" placeholder="your@email.com" required />
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea id="message" rows="5" placeholder="Tell me about your project or opportunity..." required></textarea>
+          </div>
+          <button type="submit" class="btn-primary" style="width:fit-content;" id="submitBtn">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
 
-            try {
-                // Firestore collection path for public data
-                const messagesCollectionRef = collection(db, `artifacts/${appId}/public/data/contact_messages`);
+  <footer>
+    <p>© 2025 Navjot Kaushal · Built with purpose, powered by curiosity.</p>
+  </footer>
 
-                await addDoc(messagesCollectionRef, {
-                    name: name,
-                    email: email,
-                    message: message,
-                    timestamp: serverTimestamp(), // Add server timestamp
-                    userId: currentUserId // Store the user ID
-                });
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-                showMessageBox("Success!", "Your message has been sent. Thank you!");
-                contactForm.reset(); // Clear the form
-            } catch (error) {
-                console.error("Error sending message:", error);
-                showMessageBox("Error", "Failed to send message. Please try again later.");
-            } finally {
-                submitBtn.disabled = false;
-                loadingIndicator.classList.add('hidden');
-            }
-        });
-
-        // Admin Messages Display
-        const adminMessagesSection = document.getElementById('admin-messages');
-        const messagesList = document.getElementById('messagesList');
-        const toggleAdminMessagesBtn = document.getElementById('toggleAdminMessages');
-        const hideMessagesBtn = document.getElementById('hideMessagesBtn');
-
-        toggleAdminMessagesBtn.addEventListener('click', () => {
-            adminMessagesSection.classList.toggle('hidden');
-            if (!adminMessagesSection.classList.contains('hidden')) {
-                // If showing, scroll to it
-                adminMessagesSection.scrollIntoView({ behavior: 'smooth' });
-            }
-        });
-
-        hideMessagesBtn.addEventListener('click', () => {
-            adminMessagesSection.classList.add('hidden');
-        });
-
-        function setupMessageListener() {
-            if (!db) {
-                console.error("Firestore not initialized. Cannot set up message listener.");
-                return;
-            }
-
-            // Query for messages, ordered by timestamp (if available)
-            const messagesQuery = query(collection(db, `artifacts/${appId}/public/data/contact_messages`), orderBy('timestamp', 'desc'));
-
-            onSnapshot(messagesQuery, (snapshot) => {
-                messagesList.innerHTML = ''; // Clear existing messages
-                if (snapshot.empty) {
-                    messagesList.innerHTML = '<p class="text-center text-gray-400">No messages received yet.</p>';
-                    return;
-                }
-
-                snapshot.docs.forEach(doc => {
-                    const data = doc.data();
-                    const messageElement = document.createElement('div');
-                    messageElement.className = 'card p-6 rounded-lg';
-                    messageElement.innerHTML = `
-                        <p class="text-sm text-gray-500 mb-2">From: <span class="text-purple-400">${data.name} &lt;${data.email}&gt;</span></p>
-                        <p class="text-sm text-gray-500 mb-2">User ID: <span class="text-cyan-400 break-all">${data.userId || 'N/A'}</span></p>
-                        <p class="text-gray-300 mb-4">${data.message}</p>
-                        <p class="text-xs text-gray-500">${data.timestamp ? new Date(data.timestamp.toDate()).toLocaleString() : 'Just now'}</p>
-                    `;
-                    messagesList.appendChild(messageElement);
-                });
-            }, (error) => {
-                console.error("Error listening to messages:", error);
-                messagesList.innerHTML = '<p class="text-center text-red-400">Error loading messages.</p>';
-                showMessageBox("Error", "Failed to load messages from storage.");
-            });
-        }
-
-    </script>
-
-    <!-- Particles.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-    <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // Optional: Simple typewriter effect for the hero text
-        const heroTextElement = document.querySelector('#about h1');
-        const originalText = "Hello, I'm Navjot Kaushal"; // Text without gradient span
-        const gradientSpan = '<span class="gradient-text">Navjot Kaushal</span>';
-        const fullText = `Hello, I'm ${gradientSpan}`;
-        let i = 0;
-        let isDeleting = false;
-        let currentText = '';
-        const typingSpeed = 100; // milliseconds per character
-        const deletingSpeed = 50;
-        const delayBetweenTexts = 1500;
-
-        function typeWriter() {
-            const namePart = 'Navjot Kaushal'; // The part that gets typed/deleted
-            const staticPart = "Hello, I'm ";
-
-            if (isDeleting) {
-                currentText = namePart.substring(0, i - 1);
-                i--;
-            } else {
-                currentText = namePart.substring(0, i + 1);
-                i++;
-            }
-
-            heroTextElement.innerHTML = `${staticPart}<span class="gradient-text">${currentText}</span><span class="cursor">|</span>`; // Add a blinking cursor effect
-
-            let speed = typingSpeed;
-            if (isDeleting) {
-                speed = deletingSpeed;
-            }
-
-            if (!isDeleting && i === namePart.length) {
-                isDeleting = true;
-                speed = delayBetweenTexts;
-            } else if (isDeleting && i === 0) {
-                isDeleting = false;
-                speed = typingSpeed;
-            }
-
-            setTimeout(typeWriter, speed);
-        }
-
-        // UNCOMMENTED: Enable the typewriter effect on window load
-        // This will run after Firebase initialization, which is fine as it's a visual effect
-        // If you want it to start immediately, move this line before initializeFirebase() call
-        window.addEventListener('load', typeWriter);
-
-
-        // Add blur effect to navbar on scroll
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) { // Adjust scroll threshold as needed
-                navbar.classList.add('navbar-blurred');
-            } else {
-                navbar.classList.remove('navbar-blurred');
-            }
-        });
-
-        // Particles.js initialization for hero background
-        particlesJS('particles-js', {
-            "particles": {
-                "number": {
-                    "value": 80,
-                    "density": {
-                        "enable": true,
-                        "value_area": 800
-                    }
-                },
-                "color": {
-                    "value": "#8b5cf6" /* Purple color for particles */
-                },
-                "shape": {
-                    "type": "circle",
-                    "stroke": {
-                        "width": 0,
-                        "color": "#000000"
-                    },
-                    "polygon": {
-                        "nb_sides": 5
-                    },
-                    "image": {
-                        "src": "img/github.svg",
-                        "width": 100,
-                        "height": 100
-                    }
-                },
-                "opacity": {
-                    "value": 0.5,
-                    "random": false,
-                    "anim": {
-                        "enable": false,
-                        "speed": 1,
-                        "opacity_min": 0.1,
-                        "sync": false
-                    }
-                },
-                "size": {
-                    "value": 3,
-                    "random": true,
-                    "anim": {
-                        "enable": false,
-                        "speed": 40,
-                        "size_min": 0.1,
-                        "sync": false
-                    }
-                },
-                "line_linked": {
-                    "enable": true,
-                    "distance": 150,
-                    "color": "#ec4899", /* Pink color for lines */
-                    "opacity": 0.4,
-                    "width": 1
-                },
-                "move": {
-                    "enable": true,
-                    "speed": 6,
-                    "direction": "none",
-                    "random": false,
-                    "straight": false,
-                    "out_mode": "out",
-                    "bounce": false,
-                    "attract": {
-                        "enable": false,
-                        "rotateX": 600,
-                        "rotateY": 1200
-                    }
-                }
-            },
-            "interactivity": {
-                "detect_on": "canvas",
-                "events": {
-                    "onhover": {
-                        "enable": true,
-                        "mode": "grab"
-                    },
-                    "onclick": {
-                        "enable": true,
-                        "mode": "push"
-                    },
-                    "resize": true
-                },
-                "modes": {
-                    "grab": {
-                        "distance": 140,
-                        "line_linked": {
-                            "opacity": 1
-                        }
-                    },
-                    "bubble": {
-                        "distance": 400,
-                        "size": 40,
-                        "duration": 2,
-                        "opacity": 8,
-                        "speed": 3
-                    },
-                    "repulse": {
-                        "distance": 200,
-                        "duration": 0.4
-                    },
-                    "push": {
-                        "particles_nb": 4
-                    },
-                    "remove": {
-                        "particles_nb": 2
-                    }
-                }
-            },
-            "retina_detect": true
-        });
-
-        // Scroll Reveal Animation Logic
-        const scrollRevealElements = document.querySelectorAll('.scroll-reveal');
-
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    observer.unobserve(entry.target); // Stop observing once animated
-                }
-            });
-        }, {
-            threshold: 0.1, // Trigger when 10% of the element is visible
-            rootMargin: '0px 0px -50px 0px' // Adjust when elements become visible
-        });
-
-        scrollRevealElements.forEach(el => {
-            observer.observe(el);
-        });
-
-    </script>
+    // Form handler
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      btn.textContent = 'Sent! ✓';
+      btn.style.opacity = '0.7';
+      btn.disabled = true;
+      document.getElementById('contactForm').reset();
+      setTimeout(() => { btn.textContent = 'Send Message'; btn.style.opacity = '1'; btn.disabled = false; }, 3000);
+    }
+  </script>
 </body>
 </html>
