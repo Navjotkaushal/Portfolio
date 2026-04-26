@@ -9,3 +9,6 @@ I’m a Machine Learning enthusiast focused on building real-world AI systems. M
 Strong fundamentals in Python, Data Structures, and Algorithms
 Applied Machine Learning & Data Analysis
 Clean, scalable project architecture
+
+Visit->
+https://navjotkaushal.github.io/Portfolio/
