@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Add this in your <head> -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  emailjs.init("qTmEFqnCPkbY7z6aM"); // 🔑 Replace with your Public Key
+</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Navjot Kaushal | ML Engineer</title>
@@ -426,7 +431,7 @@
             <span class="stack-tag">Data Flow</span>
           </div>
           <div class="project-links">
-            <a href="https://github.com/Navjotkaushal/AAPL-Stock-Direction-Classifier" target="_blank" class="project-link github">⌥ GitHub →</a>
+            <a href="https://navjotkaushal-aapl-stock-direction-classifier-app-hpejt1.streamlit.app/" target="_blank" class="project-link github">⌥ GitHub →</a>
           </div>
         </div>
 
@@ -601,21 +606,50 @@
             <a href="https://navjotkaushal.github.io/Portfolio/" target="_blank">navjotkaushal.github.io/Portfolio</a>
           </div>
         </div>
-        <form id="contactForm" class="form-row" onsubmit="handleSubmit(event)">
-          <div class="form-group">
-            <label>Name</label>
-            <input type="text" id="name" placeholder="Your name" required />
-          </div>
-          <div class="form-group">
-            <label>Email</label>
-            <input type="email" id="email" placeholder="your@email.com" required />
-          </div>
-          <div class="form-group">
-            <label>Message</label>
-            <textarea id="message" rows="5" placeholder="Tell me about your project or opportunity..." required></textarea>
-          </div>
-          <button type="submit" class="btn-primary" style="width:fit-content;" id="submitBtn">Send Message</button>
-        </form>
+       <form id="contactForm" class="form-row" onsubmit="handleSubmit(event)">
+  <div class="form-group">
+    <label>Name</label>
+    <input type="text" id="name" placeholder="Your name" required />
+  </div>
+  <div class="form-group">
+    <label>Email</label>
+    <input type="email" id="email" placeholder="your@email.com" required />
+  </div>
+  <div class="form-group">
+    <label>Message</label>
+    <textarea id="message" rows="5" placeholder="Tell me about your project or opportunity..." required></textarea>
+  </div>
+  <button type="submit" class="btn-primary" style="width:fit-content;" id="submitBtn">
+    Send Message
+  </button>
+</form>
+
+<script>
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    const btn = document.getElementById("submitBtn");
+    btn.textContent = "Sending...";
+    btn.disabled = true;
+
+    const templateParams = {
+      from_name:  document.getElementById("name").value,
+      from_email: document.getElementById("email").value,
+      message:    document.getElementById("message").value,
+    };
+
+    emailjs.send("service_udqv1zi", "template_aw3381a", templateParams) // 🔑 Replace both
+      .then(() => {
+        btn.textContent = "Sent ✓";
+        document.getElementById("contactForm").reset();
+      })
+      .catch((error) => {
+        console.error("EmailJS error:", error);
+        btn.textContent = "Failed. Try again.";
+        btn.disabled = false;
+      });
+  }
+</script>
       </div>
     </div>
   </section>
